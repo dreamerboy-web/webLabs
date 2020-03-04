@@ -93,84 +93,166 @@ let ports = [new Port(1, 'Port1', 5), new Port(2, 'Port2', 4),
 console.log('\nдоданя ноового порту\n');
 
 console.log(ports);
-ports.push(newShip);
+
+let addNewShip = (newShip) =>{
+    ports.push(newShip);
+};
+
+addNewShip(newShip);
+
 console.log(ports);
 
 //видалення першого порту
 console.log('\nвидалення першого порту\n');
 console.log(ports);
-ports.shift();
+let delatePort = (ports) =>{
+    ports.shift();
+};
+delatePort(ports);
 console.log(ports);
 
 //знаходження конкретного порту
 console.log('\nзнаходження конкретного порту\n');
-let findPort = ports.find(value => {
-    return value.name = 'NewPort'
-});
-console.log(findPort);
+
+let findPortClass = (port) =>{
+    let ovePort;
+
+    ports.forEach((value,index) => {
+
+        if (value.name === port.name &&
+            value.number === port.number &&
+            value.marina === port.marina) ovePort = value ;
+    });
+
+    console.log(`Наш порт: ${ovePort.name} з номенром ${ovePort.number}`)
+};
+let somePort = new Port(6, 'Б.О.М.Ж.', undefined);
+findPortClass(somePort);
+
+// let findPort = ports.find(value => {
+//     return value.name = 'NewPort'
+// });
+//console.log(findPort);
 
 //доданя ноового корабля
 console.log('\nдоданя ноового корабля\n');
-
+ let someNewShip = new Ship(Math.round(Math.random()*999), "NewPlayer", undefined);
 console.log(ships);
-ships.push(new Ship(Math.round(Math.random()*999), "NewPlayer", undefined));
+let addNewShiper = (ship) =>{
+    ships.push(ship)
+};
+
+addNewShiper(someNewShip);
 console.log(ships);
 
 //видаленя рандомного корабля
 console.log('\nвидаленя рандомного корабля\n');
-
 console.log(ships);
-ships.splice(Math.floor(Math.random()*ships.length),1);
+
+let someNewShopForDell = new Ship(420, "Cannabis", undefined);
+let delateShip = (ship) =>{
+    ships.forEach((value,index, array) => {
+        if(ship.number === value.number &&
+        ship.name === value.name &&
+        ship.marina === value.marina) array.splice(index, 1)
+    })
+};
+
+delateShip(someNewShopForDell);
+
+
+
 console.log(ships);
 
 //знаходження конкретного корабля
 console.log('\nзнаходження конкретного корабля\n');
+let forFind = new Ship(999, "Infinity", 3);
 
-let findShip = ships.find(value => {
-    return value.name = 'NewPlayer'
-});
-console.log(findShip);
+let findShipClass = (ship) =>{
+    let oveShip;
+
+    ships.forEach((value,index) => {
+
+        if (value.name === ship.name &&
+            value.number === ship.number &&
+            value.marina === ship.marina) oveShip = value ;
+    });
+
+    console.log(`Наш корабель: ${oveShip.name} з номенром ${oveShip.number}`)
+};
+
+findShipClass(forFind);
 
 //Додавання пристані до порту
 console.log('\nДодавання пристані до порту\n');
 
 
-let withoutMarina = ports.find(value => {
-    return value.marina === undefined
-});
+let addMarina = (port, marina) =>{
+    if(port.marina !== undefined) console.log(`Порт номер ${port.number} уже має пристань!`)
+    else {
+        port.marina = marina.number;
+        console.log(`Порт номер ${port.number} тепер пристань ${marina.number}!`)
+    }
+}
+
+
+
 console.log(ports);
 
-withoutMarina.marina = marinas[Math.round(Math.random()*marinas.length-1)].number;
+addMarina(ports[4],marinas[3]);
 
 console.log(ports);
 
 //Видалення пристані із порту
 console.log('\nВидалення пристані із порту\n');
 
-let withMarina = ports.filter(value => {
-    return value.marina !== undefined
-});
+let deleteMarina = (port) =>{
+    if(port.marina === undefined) console.log(`Порт з номер ${port.number} ітак не має пристані!`);
+    else {
+        port.marina = undefined;
+        console.log(`Порт з номер ${port.number} тепер не має пристані!`)
+    }
+};
 
 console.log(ports);
-console.log(Math.floor(Math.random() * withMarina.length - 1));
-withMarina[Math.floor(Math.random() * withMarina.length - 1)].marina = undefined;
+
+deleteMarina(ports[5]);
 
 console.log(ports);
 
 //Прибуття/Відбуття корабля від пристані
 console.log('\nПрибуття/Відбуття корабля від пристані\n');
 
-let numberShip = findShip.number;
-let forTime = marinas.find(value => value = numberShip);
+let timeShip = (ship, marina) =>{
+    let timeArrival = marina.timeArrival;
+    let timeDeparture = marina.timeDeparture;
 
-console.log(`Прибуття ${forTime.timeArrival} \nВідбуття ${forTime.timeArrival}`);
+    if(ship.marina === marina.number && timeDeparture !== undefined) console.log(`Корабель ${ship.name}
+     прибув на пристань номер ${marina.number} о ${timeDeparture}, а відбув o ${timeArrival}`);
+    else if(ship.marina === marina.number && timeArrival === undefined) console.log(`Корабель ${ship.name}
+     прибув на пристань номер ${marina.number} о ${timeDeparture}, але ще не відбув`);
+    else if(ship.marina !== marina.number) console.log(`Корабель ${ship.name}
+     не прибував на пристань номер ${marina.number}`);
+
+
+};
+
+
+
+timeShip(ships[0], marinas[1]);
 
 //Пошук усіх кораблів на пристані
 console.log('\nПошук усіх кораблів на пристані\n');
 
-let allShips = ships.filter(value => {
-    return value.marina === 3;
-});
+let findAllShips = (ships, marina) =>{
 
-console.log(allShips);
+    let allShips = ships.filter(value => {
+        return value.marina === marina.number;
+    });
 
+    if (allShips.length === 0) console.log('Кораблыів на пристані немає!');
+    else console.log(allShips);
+
+};
+
+findAllShips(ships, marinas[4]);
