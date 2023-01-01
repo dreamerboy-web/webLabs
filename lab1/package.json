@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "dependencies": {},
   "devDependencies": {
-    "config": "^3.3.0"
+    "config": "^3.3.8"
   }
 }
